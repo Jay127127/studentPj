@@ -11,6 +11,7 @@ import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -26,7 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ApacheHTTPCall {
-    private static final String USER_AGENT = "Chrome/51.0.2704.103";
     private static final String GET_URL = "http://localhost:8090/api/pom/v1/stat/history/task?toDate=2022-09-29T00:00:00&fromDate=2022-09-16T00:00:00";
     private static final String POST_URL = "http://localhost:8090/api/pom/v1/data/group/add";
 
@@ -35,6 +35,8 @@ public class ApacheHTTPCall {
         System.out.println("GET DONE\n\n");
         postRequest();
         System.out.println("POST DONE\n\n");
+        putRequest();
+        System.out.println("PUT DONE\n\n");
     }
 
     private static void getRequest() throws ClientProtocolException, IOException {
@@ -60,6 +62,8 @@ public class ApacheHTTPCall {
             // 2) 요청 전송 및 결과 받기
             HttpResponse httpResponse = httpclient.execute(httpget);
             String ree = String.valueOf(httpResponse.getLocale());
+
+            System.out.println("========================================= Executing request =========================================");
             System.out.println(ree);
 
             // 3) Response Handler 사용해서 결과 처리
@@ -131,6 +135,7 @@ public class ApacheHTTPCall {
             StringEntity stringEntity = new StringEntity(json, "UTF-8");
             httpPost.setEntity(stringEntity);
 
+            System.out.println("========================================= Executing request =========================================");
             System.out.println("Executing request " + httpPost.getRequestLine());
 
             // Response Handler 만들기
@@ -142,11 +147,56 @@ public class ApacheHTTPCall {
                         HttpEntity entity = response.getEntity();
                         return entity != null ? EntityUtils.toString(entity) : null;
                     } else {
-                        throw new ClientProtocolException("Unexpected response status: " + status);
+                        throw new ClientProtocolException("Errored Response Status: " + status);
                     }
                 }
             };
             Object responseBody = httpclient.execute(httpPost, responseHandler);
+            System.out.println("==================================== Response Body ====================================");
+            System.out.println(responseBody);
+        }
+    }
+
+    public static void putRequest() throws IOException {
+        RequestConfig config = RequestConfig.custom()
+                .setConnectTimeout(3000)
+                .setConnectionRequestTimeout(3000)
+                .setSocketTimeout(30000)
+                .build();
+
+        try (CloseableHttpClient httpclient = HttpClientBuilder.create().setDefaultRequestConfig(config).build()) {
+            HttpPut httpPut = new HttpPut("http://localhost:8090/api/pom/v1/data/group/update");
+            httpPut.setHeader("Accept", "*/*");
+            httpPut.setHeader("Content-type", "application/json");
+            httpPut.setHeader("CLIENT-TYPE", "CLIENT");
+            httpPut.setHeader("DIVA-AUTH", "IVX-1234567890");
+
+            String json = "{\r\n" +
+                    "  \"grpType\": \"C-GRP\",\r\n" +
+                    "  \"grpName\": \"Apache_PUT_Test02\",\r\n" +
+                    "  \"grpPk\": \"463\",\r\n" +
+                    "  \"grpPlaceAddr\": \"강남대로 100\",\r\n" +
+                    "  \"grpPlaceControlAreaCode\": \"B-1004(C-GRP)\",\r\n" +
+                    "  \"grpServiceFk\": \"SERVICE-000081\",\r\n" +
+                    "  \"grpIndustrialSafetySetting\": \"0\",\r\n" +
+                    "  \"grpIndustrialSafetySettingImage\": \"TestImage0010101010(GRP)\"\r\n" +
+                    "}";
+            StringEntity stringEntity = new StringEntity(json,"UTF-8");
+            httpPut.setEntity(stringEntity);
+
+            System.out.println("========================================= Executing request =========================================");
+            System.out.println("Executing request " + httpPut.getRequestLine());
+
+            ResponseHandler<String> responseHandler = response -> {
+                int status = response.getStatusLine().getStatusCode();
+                if (status >= 200 && status < 300) {
+                    HttpEntity entity = response.getEntity();
+                    return entity != null ? EntityUtils.toString(entity) : null;
+                } else {
+                    throw new ClientProtocolException("Errored Response Status: " + status);
+                }
+            };
+            String responseBody = httpclient.execute(httpPut, responseHandler);
             System.out.println("==================================== Response Body ====================================");
             System.out.println(responseBody);
         }

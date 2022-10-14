@@ -154,15 +154,20 @@ public class ApiCall {
                 .build();
 
         try (CloseableHttpClient httpclient = HttpClientBuilder.create().setDefaultRequestConfig(config).build()) {
-            HttpPut httpPut = new HttpPut("http://localhost:8090/api/pom/v1/data/group/gps/add");
-            httpPut.setHeader("Accept", "application/json");
+            HttpPut httpPut = new HttpPut("http://localhost:8090/api/pom/v1/data/group/update");
+            httpPut.setHeader("Accept", "*/*");
             httpPut.setHeader("Content-type", "application/json");
             httpPut.setHeader("CLIENT-TYPE", "CLIENT");
             httpPut.setHeader("DIVA-AUTH", "IVX-1234567890");
-            String json = "{\r\n" + "  \"firstName\": \"Ram\",\r\n" + "  \"lastName\": \"Jadhav\",\r\n" +
-                    "  \"emailId\": \"ramesh1234@gmail.com\",\r\n" +
-                    "  \"createdAt\": \"2018-09-11T11:19:56.000+0000\",\r\n" + "  \"createdBy\": \"Ramesh\",\r\n" +
-                    "  \"updatedAt\": \"2018-09-11T11:26:31.000+0000\",\r\n" + "  \"updatedby\": \"Ramesh\"\r\n" +
+
+            String json = "{\r\n"
+                    + "  \"firstName\": \"Ram\",\r\n"
+                    + "  \"lastName\": \"Jadhav\",\r\n"
+                    + "  \"emailId\": \"ramesh1234@gmail.com\",\r\n"
+                    + "  \"createdAt\": \"2018-09-11T11:19:56.000+0000\",\r\n"
+                    + "  \"createdBy\": \"Ramesh\",\r\n"
+                    + "  \"updatedAt\": \"2018-09-11T11:26:31.000+0000\",\r\n"
+                    + "  \"updatedby\": \"Ramesh\"\r\n" +
                     "}";
             StringEntity stringEntity = new StringEntity(json);
             httpPut.setEntity(stringEntity);
