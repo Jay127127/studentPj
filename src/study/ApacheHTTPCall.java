@@ -1,43 +1,33 @@
 package study;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.util.EntityUtils;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
+import org.json.simple.JSONObject;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ApacheHTTPCall {
     private static final String GET_URL = "http://localhost:8090/api/pom/v1/stat/history/task?toDate=2022-09-29T00:00:00&fromDate=2022-09-16T00:00:00";
     private static final String POST_URL = "http://localhost:8090/api/pom/v1/data/group/add";
 
-    public static void main(String[] args) throws IOException {
+    /*public static void main(String[] args) throws IOException {
         getRequest();
         System.out.println("GET DONE\n\n");
         postRequest();
         System.out.println("POST DONE\n\n");
         putRequest();
         System.out.println("PUT DONE\n\n");
-    }
+    }*/
 
     private static void getRequest() throws ClientProtocolException, IOException {
         // timeout config 설정
@@ -49,6 +39,7 @@ public class ApacheHTTPCall {
 
         // 설정한 config를 적용한 HttpClient 생성
         CloseableHttpClient httpclient = HttpClientBuilder.create().setDefaultRequestConfig(config).build();
+        String responseBody = null;
         try {
             // HTTP GET method
             // 1) 헤더 세팅
@@ -81,7 +72,7 @@ public class ApacheHTTPCall {
             };
 
             // 4) responseBody 만들어서 콘솔에 출력
-            String responseBody = httpclient.execute(httpget, responseHandler);
+            responseBody = httpclient.execute(httpget, responseHandler);
             System.out.println("\n==================================== Response Body ====================================");
             System.out.println(responseBody);
         } catch (ClientProtocolException e) {
