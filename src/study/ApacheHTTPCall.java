@@ -20,14 +20,14 @@ public class ApacheHTTPCall {
     private static final String GET_URL = "http://localhost:8090/api/pom/v1/stat/history/task?toDate=2022-09-29T00:00:00&fromDate=2022-09-16T00:00:00";
     private static final String POST_URL = "http://localhost:8090/api/pom/v1/data/group/add";
 
-    /*public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException {
         getRequest();
         System.out.println("GET DONE\n\n");
         postRequest();
         System.out.println("POST DONE\n\n");
         putRequest();
         System.out.println("PUT DONE\n\n");
-    }*/
+    }
 
     private static void getRequest() throws ClientProtocolException, IOException {
         // timeout config 설정
