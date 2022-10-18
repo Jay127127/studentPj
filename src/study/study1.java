@@ -8,7 +8,6 @@ public class study1 {
         Scanner scanner = new Scanner(System.in);
         ApacheHTTPCall apacheHTTPCall = new ApacheHTTPCall();
 
-
         while (true){
             System.out.println("\n어떤 요청을 보내시겠습니까?");
             String select = scanner.next();
@@ -46,6 +45,7 @@ public class study1 {
                                     "  \"grpIndustrialSafetySetting\": \""+grpIndustrialSafetySetting+"\",\r\n" +
                                     "  \"grpIndustrialSafetySettingImage\": \""+grpIndustrialSafetySettingImage+"\"\r\n" +
                                     "}";
+                    System.out.println(postJson);
                     apacheHTTPCall.postRequest(postJson); // data/group/add
                     break;
 
@@ -78,9 +78,13 @@ public class study1 {
                                     "  \"grpIndustrialSafetySetting\": \""+grpIndustrialSafetySetting2+"\",\r\n" +
                                     "  \"grpIndustrialSafetySettingImage\": \""+grpIndustrialSafetySettingImage2+"\"\r\n" +
                                     "}";
+                    System.out.println(putJson);
                     apacheHTTPCall.putRequest(putJson); // data/group/update
                     break;
             }
+            System.out.println("finish?");
+            String wanna = scanner.next();
+            if(wanna.equals("yes")) break;
         }
     }
 }

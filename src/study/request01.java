@@ -8,8 +8,8 @@ public class request01 {
         Scanner scanner = new Scanner(System.in);
         ApiCall apiCall = new ApiCall();
 
-
-        while (true){
+        boolean cont = true;
+        while (cont){
             System.out.println("\n어떤 요청을 보내시겠습니까?");
             String select = scanner.next();
             switch (select){
@@ -29,9 +29,8 @@ public class request01 {
                                     "  \"createStudentNo\": \""+createStudentNo+"\"\r\n" +
                                     "}";
                     System.out.println(postJson);
-
                     apiCall.setSvrIp("http://localhost:8888/student/insert");
-                    apiCall.postStudents(postJson); // data/group/add
+                    apiCall.postStudents(postJson);
                     break;
 
                 case "put" :
@@ -61,10 +60,14 @@ public class request01 {
                                     "  \"total\": \""+total+"\",\r\n" +
                                     "  \"average\": \""+average+"\"\r\n" +
                                     "}";
+                    System.out.println(putJson);
                     apiCall.setSvrIp("http://localhost:8888/student/update");
-                    apiCall.putStudents(putJson); // data/group/update
+                    apiCall.putStudents(putJson);
                     break;
             }
+            System.out.println("wanna finish?");
+            String wanna = scanner.next();
+            if(wanna.equals("yes")) break;
         }
     }
 }

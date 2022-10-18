@@ -101,16 +101,6 @@ public class ApacheHTTPCall {
             httpPost.setHeader("CLIENT-TYPE", "CLIENT");
             httpPost.setHeader("DIVA-AUTH", "IVX-1234567890");
 
-            // RequestBody 세팅
-            /*String json = "{\r\n" +
-                    "  \"grpType\": \"C-GRP\",\r\n" +
-                    "  \"grpName\": \"Apache-POSTTest09\",\r\n" +
-                    "  \"grpParentId\": \"25\",\r\n" +
-                    "  \"grpPlaceAddr\": \"POST_TEST\",\r\n" +
-                    "  \"grpPlaceControlAreaCode\": \"POST_TEST\",\r\n" +
-                    "  \"grpIndustrialSafetySetting\": \"1\",\r\n" +
-                    "  \"grpIndustrialSafetySettingImage\": \"TestImage0010101010(GRP)\"\r\n" +
-                    "}";*/
             StringEntity stringEntity = new StringEntity(json, "UTF-8");
             httpPost.setEntity(stringEntity);
 

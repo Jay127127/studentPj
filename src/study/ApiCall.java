@@ -102,9 +102,9 @@ public class ApiCall {
 
     public void postStudents(String json) throws IOException{
         RequestConfig config = RequestConfig.custom()
-                .setConnectTimeout(300000)
-                .setConnectionRequestTimeout(300000)
-                .setSocketTimeout(300000)
+                .setConnectTimeout(3000)
+                .setConnectionRequestTimeout(3000)
+                .setSocketTimeout(3000)
                 .build();
 
         try (CloseableHttpClient httpclient = HttpClientBuilder.create().setDefaultRequestConfig(config).build()){
@@ -114,16 +114,6 @@ public class ApiCall {
             httpPost.setHeader("CLIENT-TYPE", "CLIENT");
             httpPost.setHeader("DIVA-AUTH", "IVX-1234567890");
 
-            // RequestBody 세팅
-            /*String json = "{\r\n" +
-                    "  \"grpType\": \"C-GRP\",\r\n" +
-                    "  \"grpName\": \"Apache-POSTTest09\",\r\n" +
-                    "  \"grpParentId\": \"25\",\r\n" +
-                    "  \"grpPlaceAddr\": \"POST_TEST\",\r\n" +
-                    "  \"grpPlaceControlAreaCode\": \"POST_TEST\",\r\n" +
-                    "  \"grpIndustrialSafetySetting\": \"1\",\r\n" +
-                    "  \"grpIndustrialSafetySettingImage\": \"TestImage0010101010(GRP)\"\r\n" +
-                    "}";*/
             StringEntity stringEntity = new StringEntity(json, "UTF-8");
             httpPost.setEntity(stringEntity);
 
@@ -144,9 +134,9 @@ public class ApiCall {
 
     public void putStudents(String json) throws IOException {
         RequestConfig config = RequestConfig.custom()
-                .setConnectTimeout(30000)
-                .setConnectionRequestTimeout(30000)
-                .setSocketTimeout(300000)
+                .setConnectTimeout(3000)
+                .setConnectionRequestTimeout(3000)
+                .setSocketTimeout(3000)
                 .build();
 
         try (CloseableHttpClient httpclient = HttpClientBuilder.create().setDefaultRequestConfig(config).build()) {
@@ -156,15 +146,6 @@ public class ApiCall {
             httpPut.setHeader("CLIENT-TYPE", "CLIENT");
             httpPut.setHeader("DIVA-AUTH", "IVX-1234567890");
 
-            /*String json = "{\r\n" +
-                    "  \"studentName\": \"정충낭\",\r\n" +
-                    "  \"changeName\": \"김한별\",\r\n" +
-                    "  \"korean\": \"100\",\r\n" +
-                    "  \"english\": \"100\",\r\n" +
-                    "  \"math\": \"100\",\r\n" +
-                    "  \"history\": \"100\",\r\n" +
-                    "  \"science\": \"100\",\r\n" +
-                    "}";*/
             StringEntity stringEntity = new StringEntity(json,"UTF-8");
             httpPut.setEntity(stringEntity);
 
