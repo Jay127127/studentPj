@@ -1,5 +1,6 @@
 package study;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -13,6 +14,7 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
+import org.codehaus.jackson.map.JsonMappingException;
 import org.json.simple.JSONObject;
 
 import java.io.IOException;
@@ -24,7 +26,7 @@ public class ApacheHTTPCall {
     private static final String GET_URL = "http://localhost:8090/api/pom/v1/stat/history/task?toDate=2022-09-29T00:00:00&fromDate=2022-09-16T00:00:00";
     private static final String POST_URL = "http://localhost:8090/api/pom/v1/data/group/add";
 
-/*    public static void main(String[] args) throws IOException {
+    /* public static void main(String[] args) throws IOException {
         getRequest();
         System.out.println("GET DONE\n\n");
         postRequest();
@@ -34,14 +36,14 @@ public class ApacheHTTPCall {
     }*/
 
     public void getRequest() throws ClientProtocolException, IOException {
-        // timeout config 설정
+        // 환경설정 timeout
         RequestConfig config = RequestConfig.custom()
-                .setConnectTimeout(3000) // 호스트 서버에 소켓 연결 시 타임아웃 :: the time to establish the connection with the remote host
-                .setConnectionRequestTimeout(3000) // 커넥션 풀과의 연결 시 타임아웃 :: the time to wait for a connection from the connection manager/pool
-                .setSocketTimeout(3000) // 요청/응답 사이의 타임아웃 :: the time waiting for data – after establishing the connection; maximum time of inactivity between two data packets
+                .setConnectTimeout(3000) // 호스트 서버에 소켓 연결 시 타임아웃 (3-way-handshake)
+                .setConnectionRequestTimeout(3000) // 커넥션 풀과의 연결 시 타임아웃
+                .setSocketTimeout(3000) // 요청/응답 사이의 타임아웃
                 .build();
 
-        // 설정한 config를 적용한 HttpClient 생성
+        // 환경설정을 적용한 HttpClient 생성
         CloseableHttpClient httpclient = HttpClientBuilder.create().setDefaultRequestConfig(config).build();
         try {
             // HTTP GET method

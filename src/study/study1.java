@@ -15,7 +15,7 @@ public class study1 {
 
                 case "get" :
                     System.out.println("get 요청을 불러옵니다.");
-                    apacheHTTPCall.setURL("http://localhost:8090/api/pom/v1/stat/history/error?toDate=2022-09-29T00:00:00&fromDate=2022-09-16T00:00:00");
+                    apacheHTTPCall.setURL("http://localhost:8090/api/pom/v1/stat/history/task?toDate=2022-10-17T23:59:59&fromDate=2022-10-17T00:00:00");
                     apacheHTTPCall.getRequest(); // stat/history/task
                     break;
 
